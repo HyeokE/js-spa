@@ -1,9 +1,8 @@
 {
-  "name": " ",
+  "name": "js-spa",
   "version": "0.0.1",
   "description": "",
-  "keywords": "",
-  "license": "",
+  "license": "MIT",
   "author": "",
   "scripts": {
     "build": "parcel build index.html",

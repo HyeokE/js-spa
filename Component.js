@@ -1,46 +1,30 @@
-const app = document.querySelector('#app');
-
-class Component {
-    constructor(target) {
+export default class Component {
+    constructor (target) {
         this.target = target;
-        this.setUp();
+        this.setup();
         this.render();
+        this.setEvent();
     }
-    setUp() {
-
-    }
-    return() {
-    //    add html tage
-    }
-    render() {
+    setup () {};
+    template () { return ''; }
+    render () {
         this.target.innerHTML = this.template();
     }
-    setState(newState) {
-        this.state = {...this.state, ...newState};
+    setEvent () {}
+    addEvent (eventType, selector, callback) {
+        const children = [...this.target.querySelector(selector)];
+        const isTarget = (target) => {
+           return children.includes(target) || this.target.contains(selector)
+        }
+        this.target.addEventListener(eventType, event => {
+            if (isTarget(event.target)) {
+                callback(event);
+            }
+        });
+    }
+
+    setState (newState) {
+        this.state = { ...this.state, ...newState };
         this.render();
     }
 }
-
-let state = {
-    items: ['item1', 'item2', 'item3', 'item4']
-}
-
-const render = () => {
-    const { items } = state;
-    app.innerHTML = `
-    <ul>
-      ${items.map(item => `<li>${item}</li>`).join('')}
-    </ul>
-    <button id="append">추가</button>
-  `;
-    document.querySelector('#append').addEventListener('click', () => {
-        setState({ items: [ ...items, `item${items.length + 1}` ] })
-    })
-}
-
-const setState = (newState) => {
-    state = { ...state, ...newState };
-    render();
-}
-
-render();
